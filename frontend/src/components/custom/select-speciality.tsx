@@ -16,12 +16,10 @@ export function SelectSpeciality() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value='apple'>Apple</SelectItem>
-          <SelectItem value='banana'>Banana</SelectItem>
-          <SelectItem value='blueberry'>Blueberry</SelectItem>
-          <SelectItem value='grapes'>Grapes</SelectItem>
-          <SelectItem value='pineapple'>Pineapple</SelectItem>
+          <SelectItem value='cardio'>Cardiologie</SelectItem>
+          <SelectItem value='immu'>Immunologie</SelectItem>
+          <SelectItem value='neuro'>Neuropathologie</SelectItem>
+          <SelectItem value='diag'>Diagnostic</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

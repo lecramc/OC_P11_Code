@@ -1,4 +1,4 @@
 .idea
-frontend/medhead/node_modules
-frontend/medhead/.idea
-frontend/medhead/.idea
+frontend/node_modules
+frontend/.idea
+frontend/.env.local
