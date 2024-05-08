@@ -7,8 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { GetAllSpecialities } from "@/lib/speciality/get-all-specialities";
+import { useEffect } from "react";
 
 export function SelectSpeciality() {
+  const { getSpecialities, specialities } = GetAllSpecialities();
+
+  useEffect(() => {
+    getSpecialities();
+  }, []);
+
   return (
     <Select>
       <SelectTrigger>
@@ -16,10 +24,11 @@ export function SelectSpeciality() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value='cardio'>Cardiologie</SelectItem>
-          <SelectItem value='immu'>Immunologie</SelectItem>
-          <SelectItem value='neuro'>Neuropathologie</SelectItem>
-          <SelectItem value='diag'>Diagnostic</SelectItem>
+          {specialities?.map((spe: { id: number; name: string }) => (
+            <SelectItem key={spe.id} value={String(spe.id)}>
+              {spe.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

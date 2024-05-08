@@ -14,7 +14,7 @@ export default function Home() {
           justifyContent: "center",
         }}
       >
-        {/* <MapLocation /> */}
+        <MapLocation />
         <SelectSpeciality />
         <Button>Rechercher</Button>
       </div>

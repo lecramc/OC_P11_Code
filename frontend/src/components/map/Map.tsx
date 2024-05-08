@@ -5,9 +5,9 @@ const TOKEN = import.meta.env.VITE_MAPBOX_KEY;
 
 export const MapLocation = () => {
   const [viewState, setViewState] = useState({
-    longitude: 2.333333,
-    latitude: 48.866667,
-    zoom: 3.5,
+    longitude: -0.094151,
+    latitude: 51.509093,
+    zoom: 6,
   });
   return (
     <Map
