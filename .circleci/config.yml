@@ -9,12 +9,11 @@ jobs:
   build_backend:
     docker:
       - image: cimg/openjdk:11.0
-    working_directory: ~/backend  
     steps:
       - run:
-          name: Check files
+          name: Check POM file
           command: |
-            cd circleci
+            pwd
             ls -la
       - checkout
       - run:
