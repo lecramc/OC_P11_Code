@@ -9,7 +9,8 @@ jobs:
       - image: cimg/openjdk:11.0
     working_directory: ~/backend/Hospital
     steps:
-      - checkout
+      - checkout:
+          path: ~/backend/Hospital
       - run:
           name: Dir
           command: |
