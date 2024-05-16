@@ -9,10 +9,10 @@ jobs:
   build_hospital_service:
     docker:
       - image: cimg/openjdk:11.0
-    working_directory: ~/repo/backend/Hospital
     steps:
-      - checkout:
-          path: ~/repo/backend/Hospital
+      - run : 
+          name: Select subdirectory
+          command: cd backend/Hospital
       - run:
           name: Build and test Hospital service
           command: |
