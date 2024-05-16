@@ -12,9 +12,8 @@ jobs:
     working_directory: ~/backend  
     steps:
       - run:
-          name: Check POM file
+          name: Check files
           command: |
-            pwd
             ls -la
       - checkout
       - run:
