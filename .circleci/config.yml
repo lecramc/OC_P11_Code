@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@2.1
-
+  maven: circleci/maven@1.4.1
 jobs:
   build_hospital_service:
     docker:
