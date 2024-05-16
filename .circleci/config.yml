@@ -20,13 +20,13 @@ jobs:
           command: docker-compose build  # Construire les services sans les démarrer
       - run:
           name: Test Backend
-          command: docker-compose run hospital-service mvn test  # Exécuter les tests du backend
+          command: docker-compose run --rm hospital-service mvn test  # Exécuter les tests du backend
       - run:
           name: Test Frontend
-          command: docker-compose run frontend npm test  # Exécuter les tests du frontend
+          command: docker-compose run --rm frontend npm test  # Exécuter les tests du frontend
       - run:
           name: Cleanup
-          command: docker-compose down  # Nettoyer après les tests (si nécessaire)
+          command: docker-compose down --rmi local  # Nettoyer après les tests (si nécessaire)
 
 workflows:
   version: 2
