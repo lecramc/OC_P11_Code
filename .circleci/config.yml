@@ -8,9 +8,8 @@ jobs:
   build_hospital_service:
     docker:
       - image: openjdk:22-jdk-slim
-    
+    working_directory: ~/project/backend/Hospital
     steps:
-      - checkout
       - run:
           name: Install Maven
           command: |
@@ -18,19 +17,15 @@ jobs:
       - run:
           name: Build and test Hospital service
           command: |
-            cd backend/Hospital
             mvn clean install
   build_frontend:
     docker:
       - image: cimg/node:14.17
     working_directory: ~/project/frontend
     steps:
-      - checkout
       - run:
           name: Install dependencies
-          command: |
-            cd frontend
-            npm install
+          command: npm install
       - run:
           name: Run unit tests 
           command: |
