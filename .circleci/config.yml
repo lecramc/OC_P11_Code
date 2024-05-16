@@ -10,13 +10,15 @@ jobs:
     
     steps:
       - checkout
-      - maven/with_cache:
-          steps:
-            - run:
-                name: Build and test Hospital service
-                command: |
-                  cd backend/Hospital
-                  mvn clean install
+      - run:
+          name: Install Maven
+          command: |
+            apt-get update && apt-get install -y maven
+      - run:
+          name: Build and test Hospital service
+          command: |
+            cd backend/Hospital
+            mvn clean install
   build_frontend:
     docker:
       - image: cimg/node:14.17
