@@ -18,7 +18,7 @@ COPY pom.xml .
 COPY src src
 
 # Compilation et empaquetage du projet avec Maven
-RUN mvn clean package -DskipTests
+RUN mvn clean install
 
 # Étape de déploiement utilisant la même image Java
 FROM openjdk:22-jdk-slim
