@@ -9,8 +9,8 @@ jobs:
   build_backend:
     docker:
       - image: cimg/openjdk:11.0
+    working_directory: ~/backend
     steps:
-
       - checkout
       - run:
           name: List directory structure
@@ -23,7 +23,6 @@ jobs:
   build_frontend:
     docker:
       - image: cimg/node:14.17
-    working_directory: ~/project/backend
     steps:
       - checkout
       - run:
