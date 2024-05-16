@@ -33,18 +33,14 @@ jobs:
       - run:
           name: Run unit tests 
           command: |
-            cd frontend
+            ls -al
             npm run test
       - run:
           name: Run e2e tests 
-          command: |
-            cd frontend
-            npm run test:e2e
+          command: npm run test:e2e
       - run:
           name: Build 
-          command: |
-            cd frontend
-            npm run build
+          command: npm run build
 
 workflows:
   version: 2
