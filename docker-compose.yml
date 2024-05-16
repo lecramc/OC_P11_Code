@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  hospital-backend:
+  hospital-service:
     build:
       context: ./backend/Hospital
     ports:
@@ -8,7 +8,7 @@ services:
     networks:
       - app-network
 
-  medhead-frontend:
+  frontend:
     build:
       context: ./frontend
     ports:

@@ -19,7 +19,7 @@ jobs:
           name: Build and Test with Docker Compose
           command: |
             docker-compose up --build -d  # Construire et démarrer les services
-            docker-compose run backend mvn test  # Exécuter les tests du backend
+            docker-compose run hospital-service mvn test  # Exécuter les tests du backend
             docker-compose run frontend npm test  # Exécuter les tests du frontend
       - run:
           name: Cleanup
