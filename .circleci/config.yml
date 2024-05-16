@@ -10,9 +10,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: ls dir
+          name: Go to subdir
           command: |
-            ls backend/Hospital
+            cd backend/Hospital
       - run:
           name: Build and test Hospital service
           command: |
