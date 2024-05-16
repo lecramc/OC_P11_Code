@@ -12,7 +12,10 @@ jobs:
     working_directory: ~/repo/backend/Hospital
     steps:
       - checkout
-
+      - run:
+          name: ls dir
+          command: |
+            ls -al 
       - run:
           name: Build and test Hospital service
           command: |
