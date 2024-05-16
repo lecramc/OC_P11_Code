@@ -21,18 +21,23 @@ jobs:
             mvn clean install
   build_frontend:
     docker:
-      - image: cimg/node:22.2.0
-    working_directory: ~/project
+      - image: cimg/node:20.13.1
     steps:
       - checkout
       - run:
-          name: Run tests and build
+          name: Install dependencies
           command: |
             cd frontend
             npm install
-            npm run test
-            npm run test:e2e
-            npm run build
+      - run:
+          name: Run unit tests 
+          command: npm run test
+      - run:
+          name: Run e2e tests 
+          command: npm run test:e2e
+      - run:
+          name: Build 
+          command: npm run build
 
 workflows:
   version: 2
