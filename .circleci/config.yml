@@ -6,17 +6,15 @@ orbs:
 jobs:
    
 
-  build_backend:
+  build_hospital_service:
     docker:
       - image: cimg/openjdk:11.0
-    working_directory: ~/repo/backend
+    working_directory: ~/repo/backend/Hospital
     steps:
       - checkout
+
       - run:
-          name: Select subdirectory
-          command: cd backend
-      - run:
-          name: Build and test backend
+          name: Build and test Hospital service
           command: |
             mvn clean install
 
@@ -60,10 +58,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build_backend
+      - build_hospital_service
       - build_frontend:
           requires:
-            - build_backend
+            - build_hospital_service
       - build_and_push_docker_images:
           requires:
             - build_frontend
