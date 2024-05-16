@@ -29,6 +29,7 @@ jobs:
           command: |
             cd frontend
             npm install
+            npm i rollup
       - run:
           name: Check Rollup files
           command: |
