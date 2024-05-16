@@ -24,6 +24,7 @@ jobs:
   build_frontend:
     docker:
       - image: cimg/node:14.17
+    working_directory: ~/project/backend
     steps:
       - checkout
       - run:
