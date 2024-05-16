@@ -22,9 +22,9 @@ public class HospitalApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        String csvSpecialityFilePath = "/Users/clementmarcel/Library/Mobile Documents/com~apple~CloudDocs/Studies/Archi logiciel/Projet 11/OC_P11_Code/backend/Hospital/src/main/resources/static/Speciality.csv";
+        String csvSpecialityFilePath = "Speciality.csv";
         csvImportService.importSpecialitiesFromCSV(csvSpecialityFilePath);
-        String csvHospitalFilePath = "/Users/clementmarcel/Library/Mobile Documents/com~apple~CloudDocs/Studies/Archi logiciel/Projet 11/OC_P11_Code/backend/Hospital/src/main/resources/static/Hospital.csv";
+        String csvHospitalFilePath = "Hospital.csv";
         csvImportService.importHospitalCsv(csvHospitalFilePath);
     }
 }

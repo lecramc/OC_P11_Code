@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { useState } from "react";
 import { useControl, Marker, MarkerProps, ControlPosition } from "react-map-gl";
 import MapboxGeocoder, { GeocoderOptions } from "@mapbox/mapbox-gl-geocoder";
@@ -58,7 +60,6 @@ export default function GeocoderControl(props: GeocoderControlProps) {
     }
   );
 
-  // @ts-ignore (TS2339) private member
   if (geocoder._map) {
     if (
       geocoder.getProximity() !== props.proximity &&

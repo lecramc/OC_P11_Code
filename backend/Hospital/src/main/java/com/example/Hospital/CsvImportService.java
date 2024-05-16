@@ -1,12 +1,14 @@
 package com.example.Hospital;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,8 @@ public class CsvImportService {
     @Transactional
 
     public void importSpecialitiesFromCSV(String specialityFilePath) throws IOException, CsvValidationException {
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(specialityFilePath))
+        Resource resource = new ClassPathResource("static/" + specialityFilePath);
+        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(resource.getInputStream()))
                 .withSkipLines(1) // Skip header
                 .withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()) // Assume ';' delimiter
                 .build()) {
@@ -47,9 +50,11 @@ public class CsvImportService {
     }
 
     @Transactional
-    public void importHospitalCsv(String filePath) throws IOException {
+    public void importHospitalCsv(String specialityFilePath) throws IOException {
         List<SpecialityEntity> allSpecialities = specialityRepository.findAll();
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).withSkipLines(1).withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()).build()) {
+        Resource resource = new ClassPathResource("static/" + specialityFilePath);
+
+        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(resource.getInputStream())).withSkipLines(1).withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()).build()) {
             String[] line;
             Random random = new Random();
 

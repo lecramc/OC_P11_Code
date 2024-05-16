@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  hospital-backend:
+    build:
+      context: ./backend/Hospital
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  medhead-frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

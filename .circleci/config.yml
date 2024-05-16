@@ -1,0 +1,57 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1.0
+  maven: circleci/maven@1.1.1
+  docker: circleci/docker@2.1.1
+
+jobs:
+  build_and_test_backend:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - maven/install
+      - maven/with_cache:
+          steps:
+            - run: mvn clean test
+
+  build_and_test_frontend:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm run test
+
+  build_and_push_docker_images:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: 
+          name: Build Docker Images
+          command: |
+            docker build -t orgname/backend:$(echo $CIRCLE_SHA1 | cut -c 1-7) ./backend
+            docker build -t orgname/frontend:$(echo $CIRCLE_SHA1 | cut -c 1-7) ./frontend
+      - docker/check
+      - docker/push:
+          image: orgname/backend
+          tag: $(echo $CIRCLE_SHA1 | cut -c 1-7)
+      - docker/push:
+          image: orgname/frontend
+          tag: $(echo $CIRCLE_SHA1 | cut -c 1-7)
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build_and_test_backend
+      - build_and_test_frontend:
+          requires:
+            - build_and_test_backend
+      - build_and_push_docker_images:
+          requires:
+            - build_and_test_frontend
