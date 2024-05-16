@@ -20,7 +20,7 @@ jobs:
           command: docker-compose build  # Construire les services sans les démarrer
       - run:
           name: Test Backend
-          command: docker-compose run hospital_service mvn test  # Exécuter les tests du backend
+          command: docker-compose run hospital-service mvn test  # Exécuter les tests du backend
       - run:
           name: Test Frontend
           command: docker-compose run frontend npm test  # Exécuter les tests du frontend
