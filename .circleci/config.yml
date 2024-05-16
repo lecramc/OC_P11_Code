@@ -12,7 +12,7 @@ jobs:
       - run:
           name: ls dir
           command: |
-            ls -al 
+            ls backend/Hospital
       - run:
           name: Build and test Hospital service
           command: |
