@@ -17,25 +17,6 @@ services:
       - "3000:3000"
     networks:
       - app-network
-  tests-hospital-service:
-    build:
-      context: ./backend/Hospital
-      dockerfile: Dockerfile
-    image: backend:latest
-    container_name: tests_hospital_service
-    command: mvn test  
-    networks:
-      - app-network
-
-  tests-frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: frontend:latest
-    container_name: tests_frontend
-    command: npm run test  
-    networks:
-      - app-network
 networks:
   app-network:
     driver: bridge
