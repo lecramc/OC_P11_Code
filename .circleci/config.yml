@@ -10,12 +10,11 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      - run:
-          name: Check POM file
-          command: |
-            pwd
-            ls -la
+
       - checkout
+      - run:
+          name: List directory structure
+          command: ls -al
       - run:
           name: Build and test backend
           command: |
