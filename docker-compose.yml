@@ -3,6 +3,7 @@ services:
   hospital-service:
     build:
       context: ./backend/Hospital
+    command: "java -jar app.jar"
     ports:
       - "8080:8080"
     networks:
@@ -11,11 +12,30 @@ services:
   frontend:
     build:
       context: ./frontend
+    command: npm run preview
     ports:
       - "3000:3000"
     networks:
       - app-network
+  tests-hospital-service:
+    build:
+      context: 
+      dockerfile: Dockerfile
+    image: backend:latest
+    container_name: tests-hospital-service
+    command: mvn test  
+    networks:
+      - mynetwork
 
+  tests-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: frontend:latest
+    container_name: tests-frontend
+    command: npm run test  
+    networks:
+      - mynetwork
 networks:
   app-network:
     driver: bridge

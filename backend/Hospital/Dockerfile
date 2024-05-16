@@ -20,11 +20,6 @@ COPY src src
 # Compilation et empaquetage du projet avec Maven
 RUN mvn clean package -DskipTests
 
-# Étape de test avec Maven
-FROM build AS test
-COPY src src
-RUN mvn test
-
 # Étape de déploiement utilisant la même image Java
 FROM openjdk:22-jdk-slim
 WORKDIR /app
@@ -33,5 +28,3 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose le port sur lequel l'application s'exécute
 EXPOSE 8080
 
-# Commande pour exécuter l'application
-ENTRYPOINT ["java", "-jar", "app.jar"]

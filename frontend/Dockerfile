@@ -18,5 +18,3 @@ RUN npm run build
 
 EXPOSE 3000
 
-# Commande pour démarrer le serveur en mode preview
-CMD ["npm", "run", "preview"]
