@@ -13,7 +13,7 @@ RUN npm install
 # Copie du reste du code source de l'application
 COPY . .
 
-RUN npm run test
+RUN npm run test:e2e
 
 # Compilation du projet
 RUN npm run build

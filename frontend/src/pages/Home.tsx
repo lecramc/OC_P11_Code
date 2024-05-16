@@ -1,7 +1,7 @@
 import { SelectSpeciality } from "@/components/custom/select-speciality";
 import { Button } from "@/components/ui/button";
 import { MapLocation } from "@/components/map/Map";
-export default function Home() {
+export const Home = () => {
   return (
     <div className='h-full'>
       <div
@@ -20,4 +20,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
