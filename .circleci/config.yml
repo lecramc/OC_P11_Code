@@ -30,6 +30,12 @@ jobs:
             cd frontend
             npm install
       - run:
+          name: Check Rollup files
+          command: |
+            ls -la node_modules/rollup/dist
+            cat node_modules/rollup/package.json
+
+      - run:
           name: Run unit tests 
           command: |
             cd frontend
