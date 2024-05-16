@@ -6,7 +6,7 @@ orbs:
 jobs:
   build_hospital_service:
     docker:
-      - image: cimg/openjdk:22-jdk-slim
+      - image: cimg/openjdk:21.0.2
     steps:
       - checkout
       - run:
