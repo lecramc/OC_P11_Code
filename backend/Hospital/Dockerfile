@@ -1,11 +1,14 @@
 # Utilisez une image OpenJDK officielle
 FROM openjdk:22-jdk-slim as build
 
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+# Correction des permissions et nettoyage du cache APT
+RUN chmod 1777 /tmp \
+    && chmod -R 777 /var/lib/apt /var/cache/apt \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* 
 
-# Installer les dépendances nécessaires pour Maven
-RUN apt-get update && apt-get install -y maven
+# Mise à jour et installation de Maven avec gestion des erreurs
+RUN apt-get update --ignore-missing && apt-get install -y maven
 
 # Définition du répertoire de travail
 WORKDIR /app
