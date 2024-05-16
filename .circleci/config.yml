@@ -9,8 +9,7 @@ jobs:
       - image: cimg/base:stable  # Image de base pour les opérations CI
     steps:
       - checkout
-      - setup_remote_docker:  # Permet à CircleCI d'utiliser Docker
-          version: 20.10.23
+      - setup_remote_docker
       - run:
           name: Install Docker Compose  # Installer Docker Compose si nécessaire
           command: |
