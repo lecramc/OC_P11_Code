@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Build Docker Images
           command: |
-            docker build -t orgname/backend:${CIRCLE_SHA1} ./backend
+            docker build -t orgname/hospital_service:${CIRCLE_SHA1} ./backend/Hospital
             docker build -t orgname/frontend:${CIRCLE_SHA1} ./frontend
       - run:
           name: Login to DockerHub
@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Push Docker Images
           command: |
-            docker push orgname/backend:${CIRCLE_SHA1}
+            docker push orgname/hospital_service:${CIRCLE_SHA1}
             docker push orgname/frontend:${CIRCLE_SHA1}
 
 workflows:
