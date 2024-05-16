@@ -29,7 +29,7 @@ services:
 
   tests-frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
     image: frontend:latest
     container_name: tests_frontend
