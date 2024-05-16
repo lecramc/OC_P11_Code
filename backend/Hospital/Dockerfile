@@ -1,6 +1,9 @@
 # Utilisez une image OpenJDK officielle
 FROM openjdk:22-jdk-slim as build
 
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
 # Installer les dépendances nécessaires pour Maven
 RUN apt-get update && apt-get install -y maven
 
