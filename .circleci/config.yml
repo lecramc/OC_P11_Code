@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:  # Permet à CircleCI d'utiliser Docker
-          version: 20.10.7
+          version: 20.10.23
       - run:
           name: Install Docker Compose  # Installer Docker Compose si nécessaire
           command: |
