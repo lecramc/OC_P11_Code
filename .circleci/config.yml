@@ -31,13 +31,19 @@ jobs:
             npm install
       - run:
           name: Run unit tests 
-          command: npm run test
+          command: |
+            cd frontend
+            npm run test
       - run:
           name: Run e2e tests 
-          command: npm run test:e2e
+          command: |
+            cd frontend
+            npm run test:e2e
       - run:
           name: Build 
-          command: npm run build
+          command: |
+            cd frontend
+            npm run build
 
 workflows:
   version: 2
