@@ -7,14 +7,16 @@ jobs:
   build_hospital_service:
     docker:
       - image: openjdk:22-jdk-slim
+    
     steps:
       - checkout
-      - run:
-          name: Build and test Hospital service
-          command: |
-            cd backend/Hospital
-            mvn clean install
-
+      - maven/with_cache:
+          steps:
+            - run:
+                name: Build and test Hospital service
+                command: |
+                  cd backend/Hospital
+                  mvn clean install
   build_frontend:
     docker:
       - image: cimg/node:14.17
