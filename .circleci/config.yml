@@ -17,6 +17,7 @@ jobs:
       - run:
           name: Build and test Hospital service
           command: |
+            ls -al
             mvn clean install
   build_frontend:
     docker:
