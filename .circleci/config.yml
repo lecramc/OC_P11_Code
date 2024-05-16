@@ -10,14 +10,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Dir
-          command: |
-            cd backend/Hospital
-            pwd
-            ls -al
-      - run:
           name: Build and test Hospital service
           command: |
+            cd backend/Hospital
             mvn clean install
 
   build_frontend:
