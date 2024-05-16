@@ -16,14 +16,17 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
       - run:
-          name: Build and Test with Docker Compose
-          command: |
-            docker-compose up --build -d  # Construire et démarrer les services
-            docker-compose run hospital-service mvn test  # Exécuter les tests du backend
-            docker-compose run frontend npm test  # Exécuter les tests du frontend
+          name: Build Services
+          command: docker-compose build  # Construire les services sans les démarrer
+      - run:
+          name: Test Backend
+          command: docker-compose run backend mvn test  # Exécuter les tests du backend
+      - run:
+          name: Test Frontend
+          command: docker-compose run frontend npm test  # Exécuter les tests du frontend
       - run:
           name: Cleanup
-          command: docker-compose down  # Nettoyer après les tests
+          command: docker-compose down  # Nettoyer après les tests (si nécessaire)
 
 workflows:
   version: 2
