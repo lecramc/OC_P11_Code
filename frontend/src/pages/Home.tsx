@@ -4,16 +4,7 @@ import { MapLocation } from "@/components/map/Map";
 export const Home = () => {
   return (
     <div className='h-full'>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "5px",
-          width: "400px",
-          margin: "0 auto",
-          justifyContent: "center",
-        }}
-      >
+      <div className='flex flex-col gap-5 w-fit my-0 mx-auto justify-center'>
         <MapLocation />
         <SelectSpeciality />
         <Button>Rechercher</Button>
