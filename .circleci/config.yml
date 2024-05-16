@@ -1,28 +1,32 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.1.0
-  maven: circleci/maven@1.1.1
-  docker: circleci/docker@2.1.1
+  docker: circleci/docker@2.1
 
 jobs:
-  build_and_test_backend:
+  build_backend:
     docker:
       - image: cimg/openjdk:11.0
     steps:
       - checkout
-      - maven/install
-      - maven/with_cache:
-          steps:
-            - run: mvn clean test
+      - run:
+          name: Build and test backend
+          command: |
+            mvn clean install
 
-  build_and_test_frontend:
+  build_frontend:
     docker:
       - image: cimg/node:14.17
     steps:
       - checkout
-      - node/install-packages
-      - run: npm run test
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build and test frontend
+          command: |
+            npm run build
+            npm run test
 
   build_and_push_docker_images:
     docker:
@@ -30,28 +34,30 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
+          version: 20.10.7
           docker_layer_caching: true
-      - run: 
+      - run:
           name: Build Docker Images
           command: |
-            docker build -t orgname/backend:$(echo $CIRCLE_SHA1 | cut -c 1-7) ./backend
-            docker build -t orgname/frontend:$(echo $CIRCLE_SHA1 | cut -c 1-7) ./frontend
-      - docker/check
-      - docker/push:
-          image: orgname/backend
-          tag: $(echo $CIRCLE_SHA1 | cut -c 1-7)
-      - docker/push:
-          image: orgname/frontend
-          tag: $(echo $CIRCLE_SHA1 | cut -c 1-7)
+            docker build -t orgname/backend:${CIRCLE_SHA1} ./backend
+            docker build -t orgname/frontend:${CIRCLE_SHA1} ./frontend
+      - run:
+          name: Login to DockerHub
+          command: echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - run:
+          name: Push Docker Images
+          command: |
+            docker push orgname/backend:${CIRCLE_SHA1}
+            docker push orgname/frontend:${CIRCLE_SHA1}
 
 workflows:
   version: 2
-  build_test_deploy:
+  build_and_deploy:
     jobs:
-      - build_and_test_backend
-      - build_and_test_frontend:
+      - build_backend
+      - build_frontend:
           requires:
-            - build_and_test_backend
+            - build_backend
       - build_and_push_docker_images:
           requires:
-            - build_and_test_frontend
+            - build_frontend
