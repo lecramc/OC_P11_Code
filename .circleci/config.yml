@@ -22,28 +22,15 @@ jobs:
   build_frontend:
     docker:
       - image: cimg/node:22.2.0
-    working_directory: ~/project
+    working_directory: ~/project/frontend
     steps:
-      - checkout
       - run:
-          name: Install dependencies
+          name: Run tests and build
           command: |
             cd frontend
             npm install
-      - run:
-          name: Run unit tests 
-          command: |
-            cd frontend
             npm run test
-      - run:
-          name: Run e2e tests 
-          command: |
-            cd frontend
             npm run test:e2e
-      - run:
-          name: Build 
-          command: |
-            cd frontend
             npm run build
 
 workflows:
