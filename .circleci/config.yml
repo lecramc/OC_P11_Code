@@ -32,8 +32,7 @@ jobs:
       - run:
           name: Check Rollup files
           command: |
-            ls -la node_modules/rollup/dist
-            cat node_modules/rollup/package.json
+            ls -la frontend/node_modules/
 
       - run:
           name: Run unit tests 
