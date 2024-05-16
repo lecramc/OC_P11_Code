@@ -27,6 +27,7 @@ jobs:
       - run:
           name: Run tests and build
           command: |
+            ls -la
             cd frontend
             npm install
             npm run test
