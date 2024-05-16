@@ -15,7 +15,7 @@ jobs:
           command: |
             apt-get update && apt-get install -y maven
       - run:
-          name: Build and test Hospital service
+          name: Build and test hospital service
           command: |
             cd backend/Hospital
             mvn clean install
@@ -26,10 +26,13 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: |
+            cd frontend
+            npm install
       - run:
           name: Build and test frontend
           command: |
+            cd frontend
             npm run build
             npm run test
 
