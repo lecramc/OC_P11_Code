@@ -12,7 +12,7 @@ jobs:
     steps:
       - run : 
           name: Select subdirectory
-          command: cd backend/Hospital
+          command: ls backend
       - run:
           name: Build and test Hospital service
           command: |
