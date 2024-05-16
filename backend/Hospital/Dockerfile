@@ -1,5 +1,5 @@
-# Utilisez une image OpenJDK officielle
-FROM openjdk:22-jdk-slim as build
+# Étape de construction avec Maven
+FROM openjdk:22-jdk-slim AS build
 
 # Correction des permissions et nettoyage du cache APT
 RUN chmod 1777 /tmp \
@@ -19,6 +19,11 @@ COPY src src
 
 # Compilation et empaquetage du projet avec Maven
 RUN mvn clean package -DskipTests
+
+# Étape de test avec Maven
+FROM build AS test
+COPY src src
+RUN mvn test
 
 # Étape de déploiement utilisant la même image Java
 FROM openjdk:22-jdk-slim
