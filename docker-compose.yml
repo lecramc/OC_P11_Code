@@ -25,7 +25,7 @@ services:
     container_name: tests_hospital_service
     command: mvn test  
     networks:
-      - mynetwork
+      - app-network
 
   tests-frontend:
     build:
@@ -35,7 +35,7 @@ services:
     container_name: tests_frontend
     command: npm run test  
     networks:
-      - mynetwork
+      - app-network
 networks:
   app-network:
     driver: bridge
