@@ -22,12 +22,12 @@ jobs:
   build_frontend:
     docker:
       - image: cimg/node:22.2.0
-    working_directory: ~/project/frontend
+    working_directory: ~/project
     steps:
+      - checkout
       - run:
           name: Run tests and build
           command: |
-            ls -la
             cd frontend
             npm install
             npm run test
