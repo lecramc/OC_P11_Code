@@ -9,6 +9,7 @@ jobs:
     docker:
       - image: openjdk:22-jdk-slim
     steps:
+      - checkout
       - run:
           name: Install Maven
           command: |
@@ -16,14 +17,13 @@ jobs:
       - run:
           name: Build and test Hospital service
           command: |
-            ls -al
             cd backend/Hospital
             mvn clean install
   build_frontend:
     docker:
       - image: cimg/node:14.17
-    working_directory: ~/project/frontend
     steps:
+      - checkout
       - run:
           name: Install dependencies
           command: |
@@ -31,13 +31,19 @@ jobs:
             npm install
       - run:
           name: Run unit tests 
-          command: npm run test
+          command: |
+            cd frontend
+            npm run test
       - run:
           name: Run e2e tests 
-          command: npm run test:e2e
+          command: |
+            cd frontend
+            npm run test:e2e
       - run:
           name: Build 
-          command: npm run build
+          command: |
+            cd frontend
+            npm run build
 
 workflows:
   version: 2
