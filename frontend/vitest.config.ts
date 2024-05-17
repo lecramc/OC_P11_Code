@@ -6,9 +6,6 @@ export default mergeConfig(
   defineConfig({
     test: {
       include: ["src/**/*.(test|spec).ts"],
-
-      globals: true,
-      environment: "jsdom",
     },
   })
 );
