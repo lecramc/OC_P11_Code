@@ -7,11 +7,11 @@ import org.springframework.data.repository.query.Param;
 public interface HospitalRepository extends JpaRepository<HospitalEntity, Long> {
 
     @Query(value = "SELECT h.* FROM hospital_entity h JOIN hospital_speciality hs ON h.id = hs.hospital_id "
-            + "JOIN speciality_entity s ON s.id = hs.speciality_id WHERE s.name = :speciality "
+            + "JOIN speciality_entity s ON s.id = hs.speciality_id WHERE s.id = :speciality "
             + "AND h.available_beds > 0 "
             + "ORDER BY (POWER(h.latitude - :latitude, 2) + POWER(h.longitude - :longitude, 2)) ASC LIMIT 1",
             nativeQuery = true)
-    HospitalEntity findNearestHospitalWithSpeciality(@Param("speciality") String speciality,
+    HospitalEntity findNearestHospitalWithSpeciality(@Param("speciality") int speciality,
             @Param("latitude") float latitude,
             @Param("longitude") float longitude);
 }

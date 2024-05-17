@@ -60,10 +60,15 @@ public class CsvImportService {
 
             while ((line = reader.readNext()) != null) {
                 HospitalEntity hospital = new HospitalEntity();
-                hospital.setName(line[8]);
+                hospital.setName(line[7]);
+                hospital.setAddress1(line[8]);
+                hospital.setAddress2(line[9]);
+                hospital.setAddress3(line[10]);
+                hospital.setCity(line[12]);
+                hospital.setPostCode(line[13]);
                 hospital.setLongitude(Float.parseFloat(line[15].replace(",", ".")));
                 hospital.setLatitude(Float.parseFloat(line[14].replace(",", ".")));
-                hospital.setAvailableBeds(random.nextInt(100));
+                hospital.setAvailableBeds(random.nextInt(25));
                 int numberOfSpecialities = 1 + random.nextInt(allSpecialities.size());
                 List<SpecialityEntity> assignedSpecialities = getRandomSpecialities(allSpecialities, numberOfSpecialities, random);
                 assignedSpecialities.forEach(hospital::addSpeciality);
