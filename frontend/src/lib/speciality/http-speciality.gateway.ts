@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/axios";
 import { SpecialityEntity } from "./speciality.entity";
 import { SpecialityInterface } from "./speciality.interface";
 import { z } from "zod";
@@ -12,9 +12,7 @@ const getSpecialitiesDTO = z.array(
 
 export class HttpSpecialityGateway implements SpecialityInterface {
   async getAllSpecilities(): Promise<SpecialityEntity[]> {
-    const unvalidatedResponse = await axios.get(
-      `${import.meta.env.VITE_API_URL}/specialities`
-    );
+    const unvalidatedResponse = await axios.get(`/specialities`);
     const result = getSpecialitiesDTO.safeParse(unvalidatedResponse.data);
     if (result.success) {
       return result.data;
