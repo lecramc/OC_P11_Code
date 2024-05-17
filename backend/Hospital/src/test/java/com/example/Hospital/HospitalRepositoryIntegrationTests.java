@@ -57,8 +57,7 @@ public class HospitalRepositoryIntegrationTests {
     @Test
     void testFindNearestHospitalWithSpeciality() {
         // Testing the query method
-        HospitalEntity nearestHospital = hospitalRepository.findNearestHospitalWithSpeciality("Ophtalmologie médicale", 51.509865f, -0.118092f);
-        System.out.println(nearestHospital);
+        HospitalEntity nearestHospital = hospitalRepository.findNearestHospitalWithSpeciality(9, 51.509865f, -0.118092f);
         assertThat(nearestHospital).isNotNull();
         assertThat(nearestHospital.getName()).isEqualTo("Hospital A");
     }

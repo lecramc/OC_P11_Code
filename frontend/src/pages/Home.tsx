@@ -4,7 +4,6 @@ import { LocationType, MapLocation } from "@/components/map/Map";
 import { useNearestHospital } from "@/components/search/useNearestHospital";
 import { useState } from "react";
 import { SearchNearestHospitalEntity } from "@/lib/search-hospital/search-nearest-hospital.entity";
-import { Loader2 } from "lucide-react";
 import { Toaster } from "sonner";
 export const Home = () => {
   const [coordinates, setCoordinates] = useState<LocationType>({
