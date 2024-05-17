@@ -6,18 +6,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GetAllSpecialities } from "@/lib/speciality/get-all-specialities";
 import { useEffect } from "react";
-
-export function SelectSpeciality() {
-  const { getSpecialities, specialities } = GetAllSpecialities();
-
+import { useSpeciality } from "./useSpeciality";
+interface SelectSpecialityProps {
+  setSpeciality: (id: number | null) => void;
+}
+export const SelectSpeciality: React.FC<SelectSpecialityProps> = ({
+  setSpeciality,
+}) => {
+  const { getSpecialities, specialities } = useSpeciality();
   useEffect(() => {
     getSpecialities();
   }, []);
 
+  const handleSpecialityChange = (value: string) => {
+    const id = Number(value);
+    setSpeciality(id);
+  };
+
   return (
-    <Select>
+    <Select onValueChange={handleSpecialityChange}>
       <SelectTrigger>
         <SelectValue placeholder='Selectionner une spécialité' />
       </SelectTrigger>
@@ -32,4 +40,4 @@ export function SelectSpeciality() {
       </SelectContent>
     </Select>
   );
-}
+};
