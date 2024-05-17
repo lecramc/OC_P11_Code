@@ -10,7 +10,6 @@ Ce dépôt contient le code source du Projet 11 du cursus OpenClassrooms. Le pro
 - [Utilisation](#utilisation)
 - [Exécution des tests](#exécution-des-tests)
 - [Intégration continue avec CircleCI](#intégration-continue-avec-circleci)
-- [Contribution](#contribution)
 
 ## Installation
 
@@ -51,6 +50,18 @@ Pour exécuter les tests du frontend et du backend, utilisez les commandes suiva
    cd frontend
    npm run test
    ```
+
+## Intégration continue avec CircleCI
+
+Ce projet utilise CircleCI pour l'intégration continue. Le fichier de configuration `.circleci/config.yml` inclut les tâches suivantes :
+
+- **Orbs** : Utilisation de `circleci/docker` et `circleci/maven` pour simplifier les configurations Docker et Maven.
+- **Jobs** :
+  - `build_hospital_service` : Installe Maven, puis construit et teste le service backend `Hospital`.
+  - `build_frontend` : Installe les dépendances Node.js, exécute les tests unitaires, et construit le projet frontend.
+- **Workflows** : Définit l'ordre d'exécution des jobs. Le job `build_frontend` dépend de la réussite de `build_hospital_service`.
+
+Pour plus de détails, référez-vous au fichier [config.yml](.circleci/config.yml).
 
 ## Licence
 
