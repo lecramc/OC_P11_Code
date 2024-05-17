@@ -1,8 +1,9 @@
-import {
-  SearchNearestHospitalEntity,
-  NearestHospitalEntity,
-} from "./search-nearest-hospital.entity";
+// fake-search-nearest-hospital.gateway.ts
 import { SearchNearestHospitalInterface } from "./search-nearest-hospital.interface";
+import {
+  NearestHospitalEntity,
+  SearchNearestHospitalEntity,
+} from "./search-nearest-hospital.entity";
 
 export class FakeSearchNearestHospitalGateway
   implements SearchNearestHospitalInterface
@@ -10,79 +11,91 @@ export class FakeSearchNearestHospitalGateway
   private hospitals: {
     id: number;
     name: string;
-    address: string;
-    availableBeds: number;
-    longitude: number;
+    address1: string;
+    address2: string;
+    address3: string;
+    city: string;
+    postCode: string;
     latitude: number;
+    longitude: number;
+    availableBeds: number;
+    specialities: { id: number; name: string }[];
   }[] = [
     {
       id: 1,
       name: "General Hospital",
-      address: "123 Main St",
+      address1: "123 Main St",
+      address2: "",
+      address3: "",
+      city: "New York",
+      postCode: "10001",
+      latitude: 40.712776,
+      longitude: -74.005974,
       availableBeds: 50,
-      latitude: -74.005974,
-      longitude: 40.712776,
+      specialities: [
+        { id: 1, name: "Cardiology" },
+        { id: 2, name: "Neurology" },
+      ],
     },
     {
       id: 2,
       name: "Community Hospital",
-      address: "456 Maple Ave",
+      address1: "456 Maple Ave",
+      address2: "",
+      address3: "",
+      city: "New York",
+      postCode: "10002",
+      latitude: 40.73061,
+      longitude: -73.935242,
       availableBeds: 30,
-      longitude: 40.73061,
-      latitude: -73.935242,
+      specialities: [
+        { id: 3, name: "Orthopedics" },
+        { id: 1, name: "Cardiology" },
+      ],
     },
     {
       id: 3,
       name: "City Hospital",
-      address: "789 Broadway",
+      address1: "789 Broadway",
+      address2: "",
+      address3: "",
+      city: "New York",
+      postCode: "10003",
+      latitude: 40.712217,
+      longitude: -74.016058,
       availableBeds: 20,
-      longitude: 40.712217,
-      latitude: -74.016058,
+      specialities: [
+        { id: 2, name: "Neurology" },
+        { id: 4, name: "Pediatrics" },
+      ],
     },
   ];
-
-  private calculateDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-    const p = 0.017453292519943295; // Math.PI / 180
-    const c = Math.cos;
-    const a =
-      0.5 -
-      c((lat2 - lat1) * p) / 2 +
-      (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
-    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-  }
 
   async getNearestHospital(
     research: SearchNearestHospitalEntity
   ): Promise<NearestHospitalEntity> {
-    const researchLat = research.latitude;
-    const researchLon = research.longitude;
-
-    let nearestHospital = this.hospitals[0];
-    let shortestDistance = this.calculateDistance(
-      researchLat,
-      researchLon,
-      nearestHospital.latitude,
-      nearestHospital.longitude
+    const { specialityId } = research;
+    // Return the first hospital that has the requested specialityId
+    const hospital = this.hospitals.find((h) =>
+      h.specialities.some((s) => s.id === specialityId)
     );
 
-    for (const hospital of this.hospitals) {
-      const distance = this.calculateDistance(
-        researchLat,
-        researchLon,
-        hospital.latitude,
-        hospital.longitude
-      );
-      if (distance < shortestDistance) {
-        nearestHospital = hospital;
-        shortestDistance = distance;
-      }
+    if (!hospital) {
+      throw new Error("No hospital found");
     }
 
-    return nearestHospital;
+    return {
+      id: hospital.id,
+      name: hospital.name,
+      address1: hospital.address1,
+      address2: hospital.address2,
+      address3: hospital.address3,
+      city: hospital.city,
+      postCode: hospital.postCode,
+      latitude: hospital.latitude,
+      longitude: hospital.longitude,
+      availableBeds: hospital.availableBeds,
+      specialities: hospital.specialities,
+    };
   }
 }

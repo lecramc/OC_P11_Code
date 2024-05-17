@@ -4,7 +4,7 @@ import { SpecialityInterface } from "./speciality.interface";
 
 export class FakeSpecialityGateway implements SpecialityInterface {
   getAllSpecilities(): Promise<SpecialityEntity[]> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       return resolve([
         { id: 1, name: "Cardiology" },
         { id: 2, name: "Neurology" },

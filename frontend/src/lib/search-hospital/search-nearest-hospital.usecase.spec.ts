@@ -1,4 +1,3 @@
-import { SearchNearestHospitalInterface } from "./search-nearest-hospital.interface";
 import {
   NearestHospitalEntity,
   SearchNearestHospitalEntity,
@@ -25,10 +24,18 @@ describe("GetNearestHospitalUseCase", () => {
     const expectedHospital: NearestHospitalEntity = {
       id: 1,
       name: "General Hospital",
-      address: "123 Main St",
-      latitude: -74.005974,
-      longitude: 40.712776,
+      address1: "123 Main St",
+      address2: "",
+      address3: "",
+      city: "New York",
+      postCode: "10001",
+      latitude: 40.712776,
+      longitude: -74.005974,
       availableBeds: 50,
+      specialities: [
+        { id: 1, name: "Cardiology" },
+        { id: 2, name: "Neurology" },
+      ],
     };
 
     // When
