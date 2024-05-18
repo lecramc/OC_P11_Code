@@ -63,6 +63,56 @@ Ce projet utilise CircleCI pour l'intégration continue. Le fichier de configura
 
 Pour plus de détails, référez-vous au fichier [config.yml](.circleci/config.yml).
 
+## Tests de performance avec JMeter
+
+Pour exécuter les tests de performance avec JMeter, utilisez le fichier `test_plan.jmx` situé dans le répertoire `backend/Hospital`. Suivez les étapes ci-dessous :
+
+1. Assurez-vous que JMeter est installé sur votre machine. Vous pouvez le télécharger depuis [Apache JMeter](https://jmeter.apache.org/).
+
+2. Lancez JMeter en mode GUI :
+
+   ```sh
+   jmeter
+   ```
+
+3. Ouvrez le fichier `test_plan.jmx` :
+
+   ```sh
+   File -> Open -> backend/Hospital/test_plan.jmx
+   ```
+
+4. Exécutez le test en cliquant sur le bouton **Start** (icône verte).
+
+## Tests end-to-end avec Cypress
+
+Pour exécuter les tests end-to-end avec Cypress, suivez les étapes ci-dessous :
+
+1. Naviguez dans le répertoire `frontend` :
+
+   ```sh
+   cd frontend
+   ```
+
+2. Assurez-vous que les dépendances sont installées :
+
+   ```sh
+   npm install
+   ```
+
+3. Lancez Cypress en mode interactif :
+
+   ```sh
+   npx cypress open
+   ```
+
+4. Sélectionnez le test que vous souhaitez exécuter dans l'interface graphique de Cypress.
+
+Alternativement, vous pouvez exécuter les tests en mode headless :
+
+```sh
+npx cypress run
+```
+
 ## Licence
 
 Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
