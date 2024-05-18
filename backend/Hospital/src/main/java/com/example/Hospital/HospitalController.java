@@ -2,8 +2,6 @@ package com.example.Hospital;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,16 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/hospitals")
 public class HospitalController {
 
-    private static final Logger log = LoggerFactory.getLogger(HospitalController.class);
-
     @Autowired
-    private HospitalRepository hospitalRepository;
+    private HospitalService hospitalService;
 
     @GetMapping
     public List<HospitalEntity> getAllHospitals() {
-        List<HospitalEntity> hospitals = hospitalRepository.findAll();
-        log.info("Retrieving hospitals: {}", hospitals);
-        return hospitals;
+        return hospitalService.getAllHospitals();
     }
 
     @GetMapping("/search")
@@ -35,7 +29,7 @@ public class HospitalController {
             @RequestParam float latitude,
             @RequestParam float longitude) {
 
-        HospitalEntity hospital = hospitalRepository.findNearestHospitalWithSpeciality(speciality, latitude, longitude);
+        HospitalEntity hospital = hospitalService.findNearestHospitalWithSpeciality(speciality, latitude, longitude);
         if (hospital != null) {
             return ResponseEntity.ok(hospital);
         } else {
