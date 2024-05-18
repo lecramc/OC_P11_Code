@@ -29,7 +29,8 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "cypress/__e2e__"
   ],
   "references": [
     {

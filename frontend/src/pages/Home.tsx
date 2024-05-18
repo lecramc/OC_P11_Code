@@ -43,7 +43,7 @@ export const Home = () => {
         <Button onClick={handleSearchClick}>Rechercher</Button>
       </div>
       {nearestHospital && (
-        <div>
+        <div id='nearest-hospital'>
           <h3>Nearest Hospital</h3>
           <p>Name: {nearestHospital.name}</p>
           <p>Address: {nearestHospital.address1}</p>
