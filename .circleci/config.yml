@@ -15,10 +15,20 @@ jobs:
           command: |
             apt-get update && apt-get install -y maven
       - run:
-          name: Build and test Hospital service
+          name: Test Hospital service
           command: |
             cd backend/Hospital
-            mvn clean install
+            mvn test
+      - run:
+          name: Generate Code Coverage Report
+          command: |
+            cd backend/Hospital
+            mvn jacoco:report
+      - run: 
+          name: Build project
+          command: |
+            cd backend/Hospital
+            mvn install
   build_frontend:
     docker:
       - image: cimg/node:20.13.1
