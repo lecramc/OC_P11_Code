@@ -10,6 +10,9 @@ Ce dépôt contient le code source du Projet 11 du cursus OpenClassrooms. Le pro
 - [Utilisation](#utilisation)
 - [Exécution des tests](#exécution-des-tests)
 - [Intégration continue avec CircleCI](#intégration-continue-avec-circleci)
+- [GitFlow pour le projet](#gitflow-pour-le-projet)
+- [Tests de performance avec JMeter](#tests-de-performance-avec-jmeter)
+- [Tests end-to-end avec Cypress](#tests-end-to-end-avec-cypress)
 
 ## Installation
 
@@ -57,11 +60,43 @@ Ce projet utilise CircleCI pour l'intégration continue. Le fichier de configura
 
 - **Orbs** : Utilisation de `circleci/docker` et `circleci/maven` pour simplifier les configurations Docker et Maven.
 - **Jobs** :
-  - `build_hospital_service` : Installe Maven, puis construit et teste le service backend `Hospital`.
-  - `build_frontend` : Installe les dépendances Node.js, exécute les tests unitaires, et construit le projet frontend.
+  - `build_hospital_service` : Lance les tests et génère un rapport de coverage, puis "build" le service backend `Hospital`.
+  - `build_frontend` : Installe les dépendances, exécute les tests unitaires, et "build" le projet frontend.
 - **Workflows** : Définit l'ordre d'exécution des jobs. Le job `build_frontend` dépend de la réussite de `build_hospital_service`.
 
 Pour plus de détails, référez-vous au fichier [config.yml](.circleci/config.yml).
+
+## GitFlow pour le projet
+
+Le projet utilise GitFlow comme modèle de branchement. Voici un aperçu des branches principales et des étapes pour travailler avec GitFlow
+
+#### Branches principales
+
+**main** : Contient le code de production.
+**develop** : Contient le code pour la prochaine version et sert de branche d'intégration.
+
+#### Branches de support
+
+**Feature branches** : Utilisées pour développer de nouvelles fonctionnalités. Dérivées de develop et fusionnées dans develop après achèvement.
+
+```
+git checkout develop
+git checkout -b feature/nom-de-la-feature
+```
+
+**Release branches** : Préparées pour une nouvelle version. Dérivées de develop et fusionnées dans main puis develop.
+
+```
+git checkout develop
+git checkout -b release/x.x.x
+```
+
+**Hotfix branches** : Utilisées pour corriger des bugs critiques en production. Dérivées de main et fusionnées dans main puis develop.
+
+```
+git checkout main
+git checkout -b hotfix/nom-du-hotfix
+```
 
 ## Tests de performance avec JMeter
 
@@ -77,7 +112,7 @@ Pour exécuter les tests de performance avec JMeter, utilisez le fichier `test_p
 
 3. Ouvrez le fichier `test_plan.jmx` :
 
-   ```sh
+   ```
    File -> Open -> backend/Hospital/test_plan.jmx
    ```
 
@@ -112,7 +147,3 @@ Alternativement, vous pouvez exécuter les tests en mode headless :
 ```sh
 npx cypress run
 ```
-
-## Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
