@@ -24,6 +24,9 @@ jobs:
           command: |
             cd backend/Hospital
             mvn jacoco:report
+      - store_artifacts:
+          path: backend/Hospital/target/site/jacoco
+          destination: jacoco-report
       - run: 
           name: Build project
           command: |
