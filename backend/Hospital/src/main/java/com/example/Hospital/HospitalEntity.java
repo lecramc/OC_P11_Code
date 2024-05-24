@@ -17,12 +17,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
-@Entity
+@Entity  // Indique que cette classe est une entité JPA
 public class HospitalEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id  // Indique le champ identifiant de l'entité
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-génère l'ID
     private Long id;
+
     private String name;
     private String address1;
     private String address2;
@@ -34,13 +35,14 @@ public class HospitalEntity {
     private float latitude;
     private int availableBeds;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // Relation Many-to-Many avec les spécialités
     @JoinTable(name = "hospital_speciality",
             joinColumns = @JoinColumn(name = "hospital_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id", referencedColumnName = "id"))
-    @JsonManagedReference
+    @JsonManagedReference  // Pour éviter la récursion infinie lors de la sérialisation JSON
     private List<SpecialityEntity> specialities = new ArrayList<>();
 
+    // Getter et Setter pour l'ID
     public Long getId() {
         return id;
     }
@@ -49,6 +51,7 @@ public class HospitalEntity {
         this.id = id;
     }
 
+    // Getter et Setter pour le nom
     public String getName() {
         return name;
     }
@@ -57,6 +60,7 @@ public class HospitalEntity {
         this.name = name;
     }
 
+    // Getter et Setter pour l'adresse1
     public String getAddress1() {
         return address1;
     }
@@ -65,6 +69,7 @@ public class HospitalEntity {
         this.address1 = addr;
     }
 
+    // Getter et Setter pour l'adresse2
     public String getAddress2() {
         return address2;
     }
@@ -73,6 +78,7 @@ public class HospitalEntity {
         this.address2 = addr;
     }
 
+    // Getter et Setter pour l'adresse3
     public String getAddress3() {
         return address3;
     }
@@ -81,6 +87,7 @@ public class HospitalEntity {
         this.address3 = addr;
     }
 
+    // Getter et Setter pour la ville
     public String getCity() {
         return city;
     }
@@ -89,6 +96,7 @@ public class HospitalEntity {
         this.city = city;
     }
 
+    // Getter et Setter pour le code postal
     public String getPostCode() {
         return postCode;
     }
@@ -97,6 +105,7 @@ public class HospitalEntity {
         this.postCode = postCode;
     }
 
+    // Getter et Setter pour la longitude
     public float getLongitude() {
         return longitude;
     }
@@ -105,6 +114,7 @@ public class HospitalEntity {
         this.longitude = longitude;
     }
 
+    // Getter et Setter pour la latitude
     public float getLatitude() {
         return latitude;
     }
@@ -113,6 +123,7 @@ public class HospitalEntity {
         this.latitude = latitude;
     }
 
+    // Getter et Setter pour les lits disponibles
     public int getAvailableBeds() {
         return availableBeds;
     }
@@ -121,19 +132,21 @@ public class HospitalEntity {
         this.availableBeds = availableBeds;
     }
 
+    // Getter pour les spécialités, retourne une copie défensive
     public List<SpecialityEntity> getSpecialities() {
         return new ArrayList<>(specialities); // Defensive copy
     }
 
+    // Setter pour les spécialités
     public void setSpecialities(List<SpecialityEntity> specialities) {
         this.specialities = specialities;
     }
 
+    // Méthode pour ajouter une spécialité
     public void addSpeciality(SpecialityEntity speciality) {
         Objects.requireNonNull(speciality, "Speciality cannot be null");
         if (!this.specialities.contains(speciality)) {
             this.specialities.add(speciality);
         }
     }
-
 }

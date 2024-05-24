@@ -18,7 +18,7 @@ import com.example.Hospital.Speciality.SpecialityRepository;
 
 public class HospitalServiceUnitTest {
 
-    @Mock
+    @Mock  // Mock des dépendances
     private HospitalRepository hospitalRepository;
 
     @Mock
@@ -27,45 +27,45 @@ public class HospitalServiceUnitTest {
     @Mock
     private HospitalEventPublisher hospitalEventPublisher;
 
-    @InjectMocks
+    @InjectMocks  // Injection du service avec les mocks
     private HospitalService hospitalService;
 
-    @BeforeEach
+    @BeforeEach  // Configuration avant chaque test
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void testFindNearestHospitalWithSpeciality_NoAvailableBeds() {
-        // Setup mock response
-        SpecialityEntity speciality = new SpecialityEntity();
-        speciality.setName("Cardiologie");
+        // Prépare la réponse du mock pour un hôpital sans lits disponibles
         when(hospitalRepository.findNearestHospitalWithSpeciality(anyInt(), anyFloat(), anyFloat())).thenReturn(null);
 
-        // Execute the service call
+        // Exécute l'appel du service
         HospitalEntity result = hospitalService.findNearestHospitalWithSpeciality(2, 51.509865f, -0.118092f);
 
-        // Assert the response
+        // Vérifie que le résultat est nul (aucun hôpital trouvé)
         assertThat(result).isNull();
+        // Vérifie que l'événement n'a pas été publié
         verify(hospitalEventPublisher, times(0)).publishHospitalFoundEvent(any(HospitalEntity.class));
     }
 
     @Test
     void testFindNearestHospitalWithSpeciality_NoHospitalFound() {
-        // Setup mock response
+        // Prépare la réponse du mock pour aucun hôpital trouvé
         when(hospitalRepository.findNearestHospitalWithSpeciality(anyInt(), anyFloat(), anyFloat())).thenReturn(null);
 
-        // Execute the service call
+        // Exécute l'appel du service
         HospitalEntity result = hospitalService.findNearestHospitalWithSpeciality(1, 51.509865f, -0.118092f);
 
-        // Assert the response
+        // Vérifie que le résultat est nul (aucun hôpital trouvé)
         assertThat(result).isNull();
+        // Vérifie que l'événement n'a pas été publié
         verify(hospitalEventPublisher, times(0)).publishHospitalFoundEvent(any(HospitalEntity.class));
     }
 
     @Test
     void testFindNearestHospitalWithSpeciality_HospitalFound() {
-        // Setup mock response
+        // Prépare la réponse du mock pour un hôpital trouvé
         SpecialityEntity speciality = new SpecialityEntity();
         speciality.setName("Cardiologie");
 
@@ -78,15 +78,16 @@ public class HospitalServiceUnitTest {
 
         when(hospitalRepository.findNearestHospitalWithSpeciality(anyInt(), anyFloat(), anyFloat())).thenReturn(hospital);
 
-        // Execute the service call
+        // Exécute l'appel du service
         HospitalEntity result = hospitalService.findNearestHospitalWithSpeciality(1, 51.509865f, -0.118092f);
 
-        // Assert the response
+        // Vérifie que le résultat n'est pas nul
         assertThat(result).isNotNull();
+        // Vérifie les propriétés de l'hôpital trouvé
         assertThat(result.getName()).isEqualTo("Hospital A");
-        assertThat(result.getAvailableBeds()).isEqualTo(9); // Bed should be reserved
+        assertThat(result.getAvailableBeds()).isEqualTo(9); // Un lit doit être réservé
 
-        // Verify the event was published
+        // Vérifie que l'événement a été publié
         verify(hospitalEventPublisher, times(1)).publishHospitalFoundEvent(hospital);
     }
 }

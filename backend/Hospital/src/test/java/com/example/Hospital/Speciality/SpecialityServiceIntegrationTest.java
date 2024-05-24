@@ -12,26 +12,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Hospital.CsvImportService;
 
-@SpringBootTest
+@SpringBootTest  // Indique que c'est un test d'intégration Spring Boot
 class SpecialityServiceIntegrationTest {
 
-    @MockBean
+    @MockBean  // Mock du service d'import CSV
     private CsvImportService csvImportService;
 
-    @Autowired
+    @Autowired  // Injection du service des spécialités
     private SpecialityService specialityService;
 
-    @Autowired
+    @Autowired  // Injection du repository des spécialités
     private SpecialityRepository specialityRepository;
 
-    @BeforeEach
+    @BeforeEach  // Méthode exécutée avant chaque test
     void setup() {
-        // Clean up repository before each test
+        // Nettoyer le repository avant chaque test
         specialityRepository.deleteAll();
     }
 
     @Test
-    @Transactional
+    @Transactional  // Assure que le test est exécuté dans une transaction
     void testGetAllSpecialities() {
         // Arrange
         SpecialityEntity speciality1 = new SpecialityEntity();
@@ -46,17 +46,19 @@ class SpecialityServiceIntegrationTest {
         List<SpecialityEntity> specialities = specialityService.getAllSpecialities();
 
         // Assert
-        assertThat(specialities).hasSize(2);
-        assertThat(specialities).extracting(SpecialityEntity::getName).containsExactlyInAnyOrder("Cardiologie", "Neurologie");
+        assertThat(specialities).hasSize(2);  // Vérifie que la taille de la liste est 2
+        assertThat(specialities)
+                .extracting(SpecialityEntity::getName)
+                .containsExactlyInAnyOrder("Cardiologie", "Neurologie");  // Vérifie les noms des spécialités
     }
 
     @Test
-    @Transactional
+    @Transactional  // Assure que le test est exécuté dans une transaction
     void testGetAllSpecialitiesEmpty() {
         // Act
         List<SpecialityEntity> specialities = specialityService.getAllSpecialities();
 
         // Assert
-        assertThat(specialities).isEmpty();
+        assertThat(specialities).isEmpty();  // Vérifie que la liste est vide
     }
 }
