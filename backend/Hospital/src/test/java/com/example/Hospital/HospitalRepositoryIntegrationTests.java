@@ -13,28 +13,28 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.Hospital.Speciality.SpecialityEntity;
 import com.example.Hospital.Speciality.SpecialityRepository;
 
-@SpringBootTest
+@SpringBootTest  // Indique que c'est un test d'intégration Spring Boot
 class HospitalRepositoryIntegrationTests {
 
-    @MockBean
+    @MockBean  // Mock du service d'import CSV
     private CsvImportService csvImportService;
 
-    @MockBean
+    @MockBean  // Mock du publisher d'événements
     private HospitalEventPublisher hospitalEventPublisher;
 
-    @Autowired
+    @Autowired  // Injection du repository des hôpitaux
     private HospitalRepository hospitalRepository;
 
-    @Autowired
+    @Autowired  // Injection du repository des spécialités
     private SpecialityRepository specialityRepository;
 
-    @Autowired
+    @Autowired  // Injection du service des hôpitaux
     private HospitalService hospitalService;
 
     private SpecialityEntity speciality1;
     private SpecialityEntity speciality2;
 
-    @BeforeEach
+    @BeforeEach  // Méthode exécutée avant chaque test
     public void setup() {
         // Créer et persister les spécialités
         speciality1 = new SpecialityEntity();
@@ -65,19 +65,20 @@ class HospitalRepositoryIntegrationTests {
     }
 
     @Test
-    @Transactional
+    @Transactional  // Assure que le test est exécuté dans une transaction
     void testFindNearestHospitalWithSpeciality() {
         // Utiliser l'identifiant correct de la spécialité
         int specialityId = speciality1.getId().intValue();
         HospitalEntity nearestHospital = hospitalService.findNearestHospitalWithSpeciality(specialityId, 51.509865f, -0.118092f);
 
+        // Vérifie que l'hôpital le plus proche est trouvé
         assertThat(nearestHospital).isNotNull();
         assertThat(nearestHospital.getName()).isEqualTo("Hospital A");
 
-        // Vérifier que l'événement a été publié
+        // Vérifie que l'événement a été publié
         verify(hospitalEventPublisher, times(1)).publishHospitalFoundEvent(nearestHospital);
 
-        // Vérifier que le nombre de lits disponibles a été décrémenté
+        // Vérifie que le nombre de lits disponibles a été décrémenté
         assertThat(nearestHospital.getAvailableBeds()).isEqualTo(9);
     }
 }

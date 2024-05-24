@@ -18,45 +18,50 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
-@Service
+@Service  // Indique que cette classe est un service Spring
 public class CsvImportService {
 
-    @Autowired
+    @Autowired  // Injection de dépendance pour HospitalRepository
     private HospitalRepository hospitalRepository;
-    @Autowired
+
+    @Autowired  // Injection de dépendance pour SpecialityRepository
     private SpecialityRepository specialityRepository;
 
-    @Transactional
-
+    @Transactional  // Assure que la méthode est exécutée dans une transaction
     public void importSpecialitiesFromCSV(String specialityFilePath) throws IOException, CsvValidationException {
+        // Charge le fichier CSV à partir du chemin donné
         Resource resource = new ClassPathResource("static/" + specialityFilePath);
         try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(resource.getInputStream()))
-                .withSkipLines(1) // Skip header
-                .withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()) // Assume ';' delimiter
+                .withSkipLines(1) // Saute la ligne d'en-tête
+                .withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()) // Utilise ';' comme délimiteur
                 .build()) {
             String[] line;
             while ((line = reader.readNext()) != null) {
-                String specialityName = line[0]; // Assuming the name is in the first column
+                String specialityName = line[0];  // Suppose que le nom est dans la première colonne
                 SpecialityEntity speciality = specialityRepository.findByName(specialityName)
                         .orElseGet(() -> {
+                            // Crée une nouvelle spécialité si elle n'existe pas
                             SpecialityEntity newSpeciality = new SpecialityEntity();
                             newSpeciality.setName(specialityName);
                             specialityRepository.save(newSpeciality);
                             return newSpeciality;
                         });
-                specialityRepository.save(speciality);
+                specialityRepository.save(speciality);  // Sauvegarde la spécialité
             }
         }
     }
 
-    @Transactional
+    @Transactional  // Assure que la méthode est exécutée dans une transaction
     public void importHospitalCsv(String specialityFilePath) throws IOException {
-        List<SpecialityEntity> allSpecialities = specialityRepository.findAll();
-        Resource resource = new ClassPathResource("static/" + specialityFilePath);
+        List<SpecialityEntity> allSpecialities = specialityRepository.findAll();  // Récupère toutes les spécialités
+        Resource resource = new ClassPathResource("static/" + specialityFilePath);  // Charge le fichier CSV à partir du chemin donné
 
-        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(resource.getInputStream())).withSkipLines(1).withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()).build()) {
+        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(resource.getInputStream()))
+                .withSkipLines(1) // Saute la ligne d'en-tête
+                .withCSVParser(new com.opencsv.CSVParserBuilder().withSeparator(';').build()) // Utilise ';' comme délimiteur
+                .build()) {
             String[] line;
-            Random random = new Random();
+            Random random = new Random();  // Pour générer des valeurs aléatoires
 
             while ((line = reader.readNext()) != null) {
                 HospitalEntity hospital = new HospitalEntity();
@@ -66,23 +71,23 @@ public class CsvImportService {
                 hospital.setAddress3(line[10]);
                 hospital.setCity(line[12]);
                 hospital.setPostCode(line[13]);
-                hospital.setLongitude(Float.parseFloat(line[15].replace(",", ".")));
-                hospital.setLatitude(Float.parseFloat(line[14].replace(",", ".")));
-                hospital.setAvailableBeds(random.nextInt(25));
+                hospital.setLongitude(Float.parseFloat(line[15].replace(",", ".")));  // Convertit la longitude
+                hospital.setLatitude(Float.parseFloat(line[14].replace(",", ".")));  // Convertit la latitude
+                hospital.setAvailableBeds(random.nextInt(25));  // Génère un nombre aléatoire de lits disponibles
                 int numberOfSpecialities = 1 + random.nextInt(allSpecialities.size());
                 List<SpecialityEntity> assignedSpecialities = getRandomSpecialities(allSpecialities, numberOfSpecialities, random);
-                assignedSpecialities.forEach(hospital::addSpeciality);
+                assignedSpecialities.forEach(hospital::addSpeciality);  // Assigne des spécialités aléatoires à l'hôpital
 
-                hospitalRepository.save(hospital);
+                hospitalRepository.save(hospital);  // Sauvegarde l'hôpital
             }
         } catch (CsvValidationException e) {
             System.err.println("CSV validation error: " + e.getMessage());
-            // Handle the error appropriately
         }
     }
 
+    // Retourne une liste de spécialités aléatoires
     private List<SpecialityEntity> getRandomSpecialities(List<SpecialityEntity> specialities, int number, Random random) {
-        Collections.shuffle(specialities, random);
-        return specialities.subList(0, number);
+        Collections.shuffle(specialities, random);  // Mélange la liste de spécialités
+        return specialities.subList(0, number);  // Retourne une sous-liste avec le nombre spécifié de spécialités
     }
 }

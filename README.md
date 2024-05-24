@@ -84,13 +84,6 @@ git checkout develop
 git checkout -b feature/nom-de-la-feature
 ```
 
-**Release branches** : Préparées pour une nouvelle version. Dérivées de develop et fusionnées dans main puis develop.
-
-```
-git checkout develop
-git checkout -b release/x.x.x
-```
-
 **Hotfix branches** : Utilisées pour corriger des bugs critiques en production. Dérivées de main et fusionnées dans main puis develop.
 
 ```
