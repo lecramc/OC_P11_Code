@@ -97,19 +97,25 @@ Pour exécuter les tests de performance avec JMeter, utilisez le fichier `test_p
 
 1. Assurez-vous que JMeter est installé sur votre machine. Vous pouvez le télécharger depuis [Apache JMeter](https://jmeter.apache.org/).
 
-2. Lancez JMeter en mode GUI :
+2. Lancez l'application java :
+
+   ```sh
+   mvn spring-boot:run
+   ```
+
+3. Lancez JMeter en mode GUI :
 
    ```sh
    jmeter
    ```
 
-3. Ouvrez le fichier `test_plan.jmx` :
+4. Ouvrez le fichier `test_plan.jmx` :
 
    ```
    File -> Open -> backend/Hospital/test_plan.jmx
    ```
 
-4. Exécutez le test en cliquant sur le bouton **Start** (icône verte).
+5. Exécutez le test en cliquant sur le bouton **Start** (icône verte).
 
 ## Tests end-to-end avec Cypress
 

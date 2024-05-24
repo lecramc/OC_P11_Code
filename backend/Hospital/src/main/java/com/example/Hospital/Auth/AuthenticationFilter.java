@@ -31,8 +31,6 @@ public class AuthenticationFilter extends GenericFilterBean {
             writer.print(exp.getMessage());
             writer.flush();
             writer.close();
-        } finally {
-            SecurityContextHolder.clearContext();  // Nettoyage du contexte de sécurité
         }
 
         filterChain.doFilter(request, response);

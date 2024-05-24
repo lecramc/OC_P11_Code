@@ -22,12 +22,12 @@ public class ApiKeyAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return apiKey;  // Retourne la clé API comme crédentials
+        return null;
     }
 
     @Override
     public Object getPrincipal() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPrincipal'");
+        return apiKey;
     }
 
 }
