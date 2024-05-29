@@ -28,7 +28,7 @@ Pour configurer le projet localement, suivez ces étapes :
 3.  Créer un fichier .env.local à la racine du dossier /frontend et compléter les variables ci-dessous :
 
 ```sh
-VITE_API_URL="http://localhost:8080/" 
+VITE_API_URL="http://localhost:8080/api/" 
 VITE_MAPBOX_KEY="XXX" 
 VITE_API_KEY="XXX" 
 ```
