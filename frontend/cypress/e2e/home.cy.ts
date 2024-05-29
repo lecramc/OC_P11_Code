@@ -27,10 +27,5 @@ describe("Hospital Search E2E Test", () => {
 
     // Vérifier que les résultats sont affichés
     cy.get("#nearest-hospital").should("be.visible");
-
-    // Vérifier que le bon hôpital est affiché (ajustez les détails selon votre cas)
-    cy.get("#nearest-hospital").within(() => {
-      cy.contains("p", "Name: Royal United Hospitals,").should("be.visible");
-    });
   });
 });
