@@ -24,7 +24,8 @@ Pour configurer le projet localement, suivez ces étapes :
    git clone https://github.com/lecramc/OC_P11_Code.git
    cd OC_P11_Code
    ```
-
+3. S'assurer que docker est installer sur voter machine.
+   
 2. Construisez et démarrez les conteneurs avec Docker Compose :
    ```sh
    docker-compose up --build
