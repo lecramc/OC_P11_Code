@@ -24,13 +24,14 @@ Pour configurer le projet localement, suivez ces étapes :
    git clone https://github.com/lecramc/OC_P11_Code.git
    cd OC_P11_Code
    ```
+
 2. S'assurer que docker est installer sur voter machine.
-3.  Créer un fichier .env.local à la racine du dossier /frontend et compléter les variables ci-dessous :
+3. Créer un fichier .env.local à la racine du dossier /frontend et compléter les variables ci-dessous :
 
 ```sh
-VITE_API_URL="http://localhost:8080/api/" 
-VITE_MAPBOX_KEY="XXX" 
-VITE_API_KEY="XXX" 
+VITE_API_URL="http://localhost:8080/api/"
+VITE_MAPBOX_KEY="XXX"
+VITE_API_KEY="XXX"
 ```
 
 4. Construisez et démarrez les conteneurs avec Docker Compose :
@@ -141,13 +142,19 @@ Pour exécuter les tests end-to-end avec Cypress, suivez les étapes ci-dessous 
    npm install
    ```
 
-3. Lancez Cypress en mode interactif :
+3. Installer cypress
+
+   ```sh
+   npx cypress install
+   ```
+
+4. Lancez Cypress en mode interactif :
 
    ```sh
    npx cypress open
    ```
 
-4. Sélectionnez le test que vous souhaitez exécuter dans l'interface graphique de Cypress.
+5. S'assurer que l'app java est lancé puis sélectionnez le test que vous souhaitez exécuter dans l'interface graphique de Cypress.
 
 Alternativement, vous pouvez exécuter les tests en mode headless :
 
